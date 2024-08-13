@@ -10,7 +10,8 @@ import Topbar from "../global/Topbar";
 import Sidebar from "../global/Sidebar";
 import { useState } from "react";
 
-const Contacts = () => {
+
+const Terceiros = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isSidebar, setIsSidebar] = useState(true);
@@ -20,38 +21,52 @@ const Contacts = () => {
     
     {
       field: "name",
-      headerName: "ID_Morador",
+      headerName: "Empresa",
       flex: 1,
       cellClassName: "name-column--cell",
     },
+    
     {
-      field: "age",
-      headerName: "Modelo",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Marca",
+      field: "tel",
+      headerName: "Tel",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Cor",
+      field: "tipo",
+      headerName: "Tipo Serviço",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Placa",
+      field: "data_ent",
+      headerName: "Data Entrada",
       flex: 1,
     },
+    {
+      field: "hora_ent",
+      headerName: "Hora entrada",
+      flex: 1,
+    },
+    {
+      field: "hora_saida",
+      headerName: "Hora Saida",
+      flex: 1,
+    },
+    {
+      field: "data_saida",
+      headerName: "Data saida",
+      flex: 1,
+    },
+    {
+      field: "id_func",
+      headerName: "ID_Func",
+      flex: 1,
+    },
+    
     
   ];
 
   return (
-
-    <>
+  <>
     <div className="app" >
       <Sidebar isSidebar={isSidebar} />
       <main className="content" >
@@ -59,8 +74,8 @@ const Contacts = () => {
 
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="TERCEIROS"
+        subtitle="Lista Referentes dos Serviços Terceiros do Condominio"
       />
       <Box
         m="40px 0 0 0"
@@ -101,11 +116,12 @@ const Contacts = () => {
         />
       </Box>
     </Box>
-
+    
+    
     </main>
     </div>
-  </>
+    </>
   );
 };
 
-export default Contacts;
+export default Terceiros;

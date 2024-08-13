@@ -1,0 +1,48 @@
+
+.container {
+  width: 600px;
+  height: max-content;
+  margin: auto;
+  background-color: #8b8787;
+  padding: 20px 15px;
+  margin-top: 120px;
+  border-radius: 7px;
+  font-family: Roboto, sans-serif;
+  box-shadow: 10px 11px rgba(0, 0, 0, 0.7);
+}
+
+h5{
+ margin-bottom: -1px;
+ font-size: 18px;
+}
+h1 {
+  margin: 0;
+  text-align: center;
+  margin-bottom: 10px;
+  color: rgb(0, 12, 12);
+}
+
+.login-form {
+  
+  padding: 5px;
+  text-align: center;
+}
+
+.form-field {
+  display: inline-block;
+  padding: 5px;
+  margin-top: 5px;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-error {
+  display: block;
+  color: red;
+  font-size: 0.9em;
+  font-weight: 600;
+}
+
+.button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

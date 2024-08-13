@@ -2,21 +2,55 @@ import { Box, Button, TextField, Snackbar, Alert } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../components/Header";
-import { Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+/* top bar e sidebar*/
 import Topbar from "../global/Topbar";
 import Sidebar from "../global/Sidebar";
+import Header from "../../components/Header";
 
-const Form = () => {
+const EditForm = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [isSidebar, setIsSidebar] = useState(true);
-  const [successMessage, setSuccessMessage] = useState(""); // Estado para mensagem de sucesso
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado para controle do Snackbar
+  const [initialValues, setInitialValues] = useState({
+    nome: "",
+    sobrenome: "",
+    tel: "",
+    email: "",
+    bloco: "",
+    rua: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const { id } = useParams(); // Pegando o ID da URL
+  const navigate = useNavigate(); // Para redirecionar após salvar
 
-  const handleFormSubmit = (values, { resetForm }) => {
-    Axios.post("http://localhost:8800/morador", {
+  // Função para buscar os dados do morador
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await Axios.get(`http://localhost:8800/morador/${id}`);
+        setInitialValues({
+          nome: response.data.nome,
+          sobrenome: response.data.sobrenome,
+          tel: response.data.tel,
+          email: response.data.email,
+          bloco: response.data.bloco,
+          rua: response.data.rua,
+        });
+      } catch (error) {
+        console.error("Erro ao buscar os dados:", error);
+      }
+    };
+
+    fetchUser();
+  }, [id]);
+
+  // Função para lidar com o envio do formulário
+  const handleFormSubmit = (values) => {
+    Axios.put(`http://localhost:8800/morador/${id}`, {
       nome: values.nome,
       sobrenome: values.sobrenome,
       tel: values.tel,
@@ -25,17 +59,16 @@ const Form = () => {
       rua: values.rua,
     })
     .then(response => {
-      // Atualiza a mensagem de sucesso e abre o Snackbar
-      setSuccessMessage("Dados salvos com sucesso!");
+      setSuccessMessage("Dados atualizados com sucesso!");
       setOpenSnackbar(true);
-      resetForm(); // Limpa o formulário após sucesso
+      navigate('/team'); // Redireciona para a lista de moradores após salvar
     })
     .catch(error => {
-      console.error("Erro ao enviar os dados:", error);
+      console.error("Erro ao atualizar os dados:", error);
     });
   };
 
-  // Fecha o Snackbar
+  // Função para fechar a Snackbar
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
@@ -46,12 +79,15 @@ const Form = () => {
         <Sidebar isSidebar={isSidebar} />
         <main className="content">
           <Topbar setIsSidebar={setIsSidebar} />
+
           <Box m="20px">
-            <Header title="CRIAR MORADOR" subtitle="Criar um Novo Morador" />
+            <Header title="ATUALIZAR" subtitle="Atualizar os dados do Morador" />
+
             <Formik
               onSubmit={handleFormSubmit}
               initialValues={initialValues}
               validationSchema={checkoutSchema}
+              enableReinitialize // Garante que o Formik use os valores atualizados
             >
               {({
                 values,
@@ -150,13 +186,11 @@ const Form = () => {
                     />
                   </Box>
                   <Box display="flex" justifyContent="end" mt="20px" gap="16px">
-                    <Link to={`/listaMorador/`} style={{ textDecoration: 'none' }}>
-                      <Button type="button" color="warning" variant="contained">
-                        Retornar
-                      </Button>
-                    </Link>
+                    <Button type="button" color="warning" variant="contained" onClick={() => navigate('/listaMorador')}>
+                      Cancelar
+                    </Button>
                     <Button type="submit" color="secondary" variant="contained">
-                      Salvar
+                      Atualizar
                     </Button>
                   </Box>
                 </form>
@@ -191,13 +225,4 @@ const checkoutSchema = yup.object().shape({
   rua: yup.string().required("Campo Obrigatório"),
 });
 
-const initialValues = {
-  nome: "",
-  sobrenome: "",
-  tel: "",
-  email: "",
-  bloco: "",
-  rua: "",
-};
-
-export default Form;
+export default EditForm;

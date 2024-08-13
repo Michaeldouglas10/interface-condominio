@@ -7,10 +7,21 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { tokens } from "../../theme";
 
+import Topbar from "../global/Topbar";
+import Sidebar from "../global/Sidebar";
+import { useState } from "react";
+
 const FAQ = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [isSidebar, setIsSidebar] = useState(true);
   return (
+
+    <>
+    <div className="app" >
+      <Sidebar isSidebar={isSidebar} />
+      <main className="content" >
+        <Topbar setIsSidebar={setIsSidebar} />
     <Box m="20px">
       <Header title="FAQ" subtitle="Frequently Asked Questions Page" />
 
@@ -80,6 +91,10 @@ const FAQ = () => {
         </AccordionDetails>
       </Accordion>
     </Box>
+
+    </main>
+    </div>
+  </>
   );
 };
 

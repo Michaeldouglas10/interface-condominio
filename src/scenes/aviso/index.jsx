@@ -5,6 +5,9 @@ import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+
 
 import Topbar from "../global/Topbar";
 import Sidebar from "../global/Sidebar";
@@ -20,33 +23,40 @@ const Contacts = () => {
     
     {
       field: "name",
-      headerName: "ID_Morador",
+      headerName: "Nome",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Modelo",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "address",
+      headerName: "Endereço",
+      flex: 1,
     },
     {
       field: "phone",
-      headerName: "Marca",
+      headerName: "Bairro",
       flex: 1,
     },
     {
       field: "email",
-      headerName: "Cor",
+      headerName: "Cidade",
       flex: 1,
     },
     {
       field: "address",
-      headerName: "Placa",
+      headerName: "CEP",
       flex: 1,
     },
-    
+    {
+      field: "city",
+      headerName: "CPF",
+      flex: 1,
+    },
+    {
+      field: "zipCode",
+      headerName: "Imagem",
+      flex: 1,
+    },
   ];
 
   return (
@@ -57,11 +67,23 @@ const Contacts = () => {
       <main className="content" >
         <Topbar setIsSidebar={setIsSidebar} />
 
+
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="Avisos"
+        subtitle="Lista de avisos do condominio"
       />
+
+      <Box display="flex" justifyContent="end" mt="20px">  
+        <Link to={`/form/`} >
+          <Button type="submit" color="secondary" variant="contained">
+           Cadastrar Aviso
+          </Button>
+        </Link>
+      </Box>
+
+
+
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -104,7 +126,7 @@ const Contacts = () => {
 
     </main>
     </div>
-  </>
+    </>
   );
 };
 

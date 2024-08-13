@@ -1,9 +1,14 @@
 import { useState } from "react";
-import FullCalendar, { formatDate } from "@fullcalendar/react";
+import { formatDate } from "@fullcalendar/core";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import listPlugin from "@fullcalendar/list";
+
+import Topbar from "../global/Topbar";
+import Sidebar from "../global/Sidebar";
+
 import {
   Box,
   List,
@@ -18,10 +23,12 @@ import { tokens } from "../../theme";
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [isSidebar, setIsSidebar] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
+  
 
   const handleDateClick = (selected) => {
-    const title = prompt("Please enter a new title for your event");
+    const title = prompt("Por Favor digite um Título para o seu evento");
     const calendarApi = selected.view.calendar;
     calendarApi.unselect();
 
@@ -39,7 +46,7 @@ const Calendar = () => {
   const handleEventClick = (selected) => {
     if (
       window.confirm(
-        `Are you sure you want to delete the event '${selected.event.title}'`
+        `tem certeza que desja remover este evento '${selected.event.title}'`
       )
     ) {
       selected.event.remove();
@@ -47,8 +54,15 @@ const Calendar = () => {
   };
 
   return (
+
+    <>
+    <div className="app" >
+      <Sidebar isSidebar={isSidebar} />
+      <main className="content" >
+        <Topbar setIsSidebar={setIsSidebar} />
+
     <Box m="20px">
-      <Header title="Calendar" subtitle="Full Calendar Interactive Page" />
+      <Header title="Calendário" subtitle="" />
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -125,6 +139,10 @@ const Calendar = () => {
         </Box>
       </Box>
     </Box>
+
+  </main>
+  </div>
+  </>
   );
 };
 

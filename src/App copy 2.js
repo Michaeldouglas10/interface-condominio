@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-
-import Login from "./scenes/login/login";
+import Topbar from "./scenes/global/Topbar";
+import Sidebar from "./scenes/global/Sidebar";
+import Login from "./scenes/login";
 import Dashboard from "./scenes/dashboard";
-import ListaMorador from "./scenes/listaMorador";
+import Team from "./scenes/team";
 import Invoices from "./scenes/invoices";
 import Contacts from "./scenes/contacts";
 import Bar from "./scenes/bar";
 import Form from "./scenes/form";
-import Quiosque from "./scenes/quiosque";
+import Line from "./scenes/line";
 import Pie from "./scenes/pie";
+import Aviso from "./scenes/aviso";
 import FAQ from "./scenes/faq";
 import Terceiro from "./scenes/terceiro";
 import Geography from "./scenes/geography";
-import Morador from "./scenes/morador";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Calendar from "./scenes/calendar/calendar";
@@ -30,31 +31,32 @@ const Private =({Item}) =>{
 
 function App() {
   const [theme, colorMode] = useMode();
+  const [isSidebar, setIsSidebar] = useState(true);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-        
+          <Sidebar isSidebar={isSidebar} />
           <main className="content">
-          
+            <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
              
-              <Route path="/" element={<Login/>} />
-              <Route path="/painel" element={<Dashboard/>} />
-              <Route path="/listaMorador" element={<ListaMorador/>} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Dashboard/>} />
+              <Route path="/team" element={<Team/>} />
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/form" element={<Form />} />
+              <Route path="/aviso" element={<Aviso />} />
               <Route path="/bar" element={<Bar />} />
               <Route path="/pie" element={<Pie />} />
-              <Route path="/quiosque" element={<Quiosque />} />
+              <Route path="/line" element={<Line />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/terceiro" element={<Terceiro />} />
               <Route path="/calendar" element={<Calendar />} />
               <Route path="/geography" element={<Geography />} />
-              <Route path="/morador/:id" element={<Morador />} />
             </Routes>
           </main>
         </div>

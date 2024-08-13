@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Snackbar, Alert } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -9,13 +9,20 @@ import React, { useState } from "react";
 import Topbar from "../global/Topbar";
 import Sidebar from "../global/Sidebar";
 
+import { useNavigate } from "react-router-dom";
+
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [isSidebar, setIsSidebar] = useState(true);
-  const [successMessage, setSuccessMessage] = useState(""); // Estado para mensagem de sucesso
-  const [openSnackbar, setOpenSnackbar] = useState(false); // Estado para controle do Snackbar
 
-  const handleFormSubmit = (values, { resetForm }) => {
+  let navigate = useNavigate();
+
+  const handleFormSubmit = (values) => {
+    console.log(values); // Verificar os dados no console
+    
+    // Enviar os dados para o servidor
+    
+
     Axios.post("http://localhost:8800/morador", {
       nome: values.nome,
       sobrenome: values.sobrenome,
@@ -25,19 +32,12 @@ const Form = () => {
       rua: values.rua,
     })
     .then(response => {
-      // Atualiza a mensagem de sucesso e abre o Snackbar
-      setSuccessMessage("Dados salvos com sucesso!");
-      setOpenSnackbar(true);
-      resetForm(); // Limpa o formulário após sucesso
+      console.log("Dados enviados com sucesso:", response.data);
+      navigate("/team");
     })
     .catch(error => {
       console.error("Erro ao enviar os dados:", error);
     });
-  };
-
-  // Fecha o Snackbar
-  const handleCloseSnackbar = () => {
-    setOpenSnackbar(false);
   };
 
   return (
@@ -150,7 +150,7 @@ const Form = () => {
                     />
                   </Box>
                   <Box display="flex" justifyContent="end" mt="20px" gap="16px">
-                    <Link to={`/listaMorador/`} style={{ textDecoration: 'none' }}>
+                    <Link to={`/team/`} style={{ textDecoration: 'none' }}>
                       <Button type="button" color="warning" variant="contained">
                         Retornar
                       </Button>
@@ -162,16 +162,6 @@ const Form = () => {
                 </form>
               )}
             </Formik>
-            {/* Snackbar para mostrar mensagens de sucesso */}
-            <Snackbar
-              open={openSnackbar}
-              autoHideDuration={6000}
-              onClose={handleCloseSnackbar}
-            >
-              <Alert onClose={handleCloseSnackbar} severity="success">
-                {successMessage}
-              </Alert>
-            </Snackbar>
           </Box>
         </main>
       </div>

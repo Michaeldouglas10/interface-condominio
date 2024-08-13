@@ -5,58 +5,75 @@ import { mockDataContacts } from "../../data/mockData";
 import Header from "../../components/Header";
 import { useTheme } from "@mui/material";
 
+import Topbar from "../global/Topbar";
+import Sidebar from "../global/Sidebar";
+import { useState } from "react";
+
+
 const Contacts = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [isSidebar, setIsSidebar] = useState(true);
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
-    { field: "registrarId", headerName: "Registrar ID" },
+    
     {
       field: "name",
-      headerName: "Name",
+      headerName: "Nome",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-    },
-    {
-      field: "phone",
-      headerName: "Phone Number",
+      field: "tel",
+      headerName: "tel",
       flex: 1,
     },
     {
-      field: "email",
-      headerName: "Email",
+      field: "endereco",
+      headerName: "Endereço",
       flex: 1,
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "bairro",
+      headerName: "Bairro",
       flex: 1,
     },
     {
-      field: "city",
-      headerName: "City",
+      field: "cidade",
+      headerName: "Cidade",
       flex: 1,
     },
     {
-      field: "zipCode",
-      headerName: "Zip Code",
+      field: "cep",
+      headerName: "CEP",
+      flex: 1,
+    },
+    {
+      field: "cpf",
+      headerName: "CPF",
+      flex: 1,
+    },
+    
+    {
+      field: "imagem",
+      headerName: "Imagem",
       flex: 1,
     },
   ];
 
   return (
+
+    <>
+    <div className="app" >
+      <Sidebar isSidebar={isSidebar} />
+      <main className="content" >
+        <Topbar setIsSidebar={setIsSidebar} />
+
     <Box m="20px">
       <Header
-        title="CONTACTS"
-        subtitle="List of Contacts for Future Reference"
+        title="Funcionários"
+        subtitle="Listas dos contatos dos funcionários"
       />
       <Box
         m="40px 0 0 0"
@@ -97,6 +114,10 @@ const Contacts = () => {
         />
       </Box>
     </Box>
+
+    </main>
+    </div>
+  </>
   );
 };
 
