@@ -12,7 +12,7 @@ function LoginPage() {
   let navigate = useNavigate();
 
   const handleLogin = (values) =>   {
-    Axios.post("http://localhost:8800/login", {
+    Axios.post("https://api-condominio.vercel.app/login", {
       usuario_morador: values.usuario_morador,
       password: values.password,
     }).then((response) => {
@@ -32,7 +32,7 @@ function LoginPage() {
 };
 
   const handleRegister = (values) => {
-    Axios.post("http://localhost:8800/register", {
+    Axios.post("https://api-condominio.vercel.app//register", {
       usuario: values.usuario_morador,
       password: values.password,
     }).then((response) => {

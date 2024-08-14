@@ -24,7 +24,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchTotalMoradores = async () => {
       try {
-        const response = await Axios.get('http://localhost:8800/moradores/total');
+        const response = await Axios.get('https://api-condominio.vercel.app/moradores/total');
         setTotalMoradores(response.data.total);
       } catch (error) {
         console.error("Erro ao buscar o total de moradores:", error);
